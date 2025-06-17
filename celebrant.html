@@ -11,72 +11,82 @@
       font-family: 'Segoe UI', sans-serif;
       background: #f8fff8 url('floral-bg.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #106600;
-      overflow-x: hidden;
-    }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    .slideshow {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      width: 100%;
-    }
-    .slide-column {
-      width: 45%;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .slide {
-      width: 100%;
-      height: 150px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .center-content {
-      margin: 30px auto;
       text-align: center;
-      max-width: 600px;
+      color: #106600;
     }
-    .video-frame {
+    #countdown {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-top: 20vh;
+      color: #106600;
+      animation: pop 1s ease-in-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0.2; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .layout {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .slider-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 150px;
+    }
+    .slider-column img {
       width: 100%;
-      max-width: 300px;
-      height: 300px;
-      margin: 0 auto;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      animation: fadeSlide 5s infinite;
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(10px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+    .card {
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: none;
+      animation: fadein 1s ease forwards;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .photo-frame {
       border: 6px solid #106600;
       border-radius: 12px;
       overflow: hidden;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
     }
     h1 {
-      font-size: 2rem;
-      margin: 15px 0 5px;
+      font-size: 2.3rem;
+      margin: 0.4em 0 0.2em;
     }
     .name {
       font-weight: bold;
       font-size: 1.2rem;
       margin-bottom: 20px;
+      letter-spacing: 1px;
     }
     .btn {
       background-color: #106600;
       color: white;
-      padding: 10px 20px;
+      padding: 10px 24px;
       font-size: 1rem;
       border: none;
       border-radius: 8px;
@@ -84,48 +94,62 @@
       margin-top: 15px;
     }
     .message-box {
+      margin-top: 25px;
       display: none;
-      margin-top: 20px;
+      font-size: 1.1rem;
       padding: 15px;
       background: #ecf9ec;
       border-left: 5px solid #106600;
       border-radius: 10px;
-      font-size: 1rem;
+      min-height: 80px;
+    }
+    .audio-tip {
+      font-size: 0.9rem;
+      color: #2e7d32;
+      margin-top: 10px;
     }
     @media (max-width: 768px) {
-      .slideshow {
+      .layout {
         flex-direction: column;
-        align-items: center;
       }
-      .slide-column {
-        width: 90%;
+      .slider-column {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+      }
+      .slider-column img {
+        width: 30%;
+        height: 80px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="slideshow">
-      <div class="slide-column">
-        <div class="slide"><img src="slide1.jpg" alt="Slide 1"></div>
-        <div class="slide"><img src="slide2.jpg" alt="Slide 2"></div>
-        <div class="slide"><img src="slide3.jpg" alt="Slide 3"></div>
-      </div>
-      <div class="slide-column">
-        <div class="slide"><img src="slide4.jpg" alt="Slide 4"></div>
-        <div class="slide"><img src="slide5.jpg" alt="Slide 5"></div>
-        <div class="slide"><img src="slide6.jpg" alt="Slide 6"></div>
-      </div>
+
+  <div id="countdown">5</div>
+
+  <div class="layout" id="card">
+    <div class="slider-column">
+      <img src="slide1.jpg" alt="Slide 1">
+      <img src="slide2.jpg" alt="Slide 2">
+      <img src="slide3.jpg" alt="Slide 3">
     </div>
 
-    <div class="center-content">
-      <div class="video-frame">
-        <video src="celebrant.mp4" autoplay muted loop playsinline></video>
+    <div class="card">
+      <div class="photo-frame">
+        <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
       </div>
       <h1>🎉 Happy Birthday 🎉</h1>
       <div class="name">Dr. Nelia S. Raganas</div>
       <button class="btn" onclick="showMessages()">See Messages</button>
       <div class="message-box" id="messageBox">Loading messages...</div>
+      <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
+    </div>
+
+    <div class="slider-column">
+      <img src="slide4.jpg" alt="Slide 4">
+      <img src="slide5.jpg" alt="Slide 5">
+      <img src="slide6.jpg" alt="Slide 6">
     </div>
   </div>
 
@@ -134,34 +158,55 @@
   </audio>
 
   <script>
-    // Play music after user interaction
+    const countdownEl = document.getElementById('countdown');
+    const card = document.getElementById('card');
+    const music = document.getElementById('music');
+    let count = 5;
+
+    const countdownInterval = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countdownEl.textContent = count;
+      } else {
+        clearInterval(countdownInterval);
+        countdownEl.style.display = 'none';
+        card.style.display = 'flex';
+      }
+    }, 1000);
+
     window.addEventListener('click', function () {
-      const music = document.getElementById("music");
-      music.play().catch(() => {});
+      music.play().catch((e) => {
+        console.log("Audio blocked until interaction", e);
+      });
     });
 
+    let messages = [];
+    let currentIndex = 0;
+    let interval;
+    let messageBox = document.getElementById("messageBox");
+
     function showMessages() {
-      const btn = document.querySelector(".btn");
-      const box = document.getElementById("messageBox");
-      btn.style.display = "none";
+      document.querySelector(".btn").style.display = "none";
       fetch("/messages")
         .then(res => res.json())
         .then(data => {
-          if (data.length === 0) {
-            box.innerText = "No messages yet.";
-          } else {
-            box.innerText = data[0];
-            let index = 1;
-            box.style.display = "block";
-            let interval = setInterval(() => {
-              if (index < data.length) {
-                box.innerText = data[index++];
-              } else {
-                clearInterval(interval);
-                box.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
-              }
-            }, 3000);
+          messages = data;
+          if (messages.length === 0) {
+            messageBox.style.display = "block";
+            messageBox.innerText = "No messages yet.";
+            return;
           }
+          messageBox.style.display = "block";
+          messageBox.innerText = messages[0];
+          interval = setInterval(() => {
+            currentIndex++;
+            if (currentIndex < messages.length) {
+              messageBox.innerText = messages[currentIndex];
+            } else {
+              clearInterval(interval);
+              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
+            }
+          }, 3000);
         });
     }
   </script>
