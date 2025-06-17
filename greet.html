@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Leave a Birthday Message</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f0fff0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      border: 3px solid #106600;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #106600;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 15px;
+      background: #106600;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .success {
+      color: green;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Leave Your Message 🎉</h2>
+    <form id="messageForm">
+      <textarea id="message" placeholder="Write your birthday greeting here..." required></textarea><br>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="success" id="successMsg" style="display:none;">Message submitted! 🎉</div>
+  </div>
+
+  <script>
+    const form = document.getElementById("messageForm");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const msg = document.getElementById("message").value.trim();
+      if (!msg) return;
+
+      fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      })
+      .then(res => res.json())
+      .then(data => {
+        successMsg.style.display = "block";
+        form.reset();
+        setTimeout(() => successMsg.style.display = "none", 3000);
+      });
+    });
+  </script>
+</body>
+</html>
