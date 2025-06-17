@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,58 +9,74 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f8fff8 url('floral-bg.jpg') no-repeat center center fixed;
+      background: #f8fff8 url('public/floral-bg.jpg') no-repeat center center fixed;
       background-size: cover;
-      text-align: center;
       color: #106600;
+      overflow-x: hidden;
     }
-    #countdown {
-      font-size: 4rem;
-      font-weight: bold;
-      margin-top: 20vh;
-      color: #106600;
-      animation: pop 1s ease-in-out;
-    }
-    @keyframes pop {
-      0% { transform: scale(0.8); opacity: 0.2; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .card {
-      max-width: 500px;
-      margin: 40px auto;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 16px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: none;
-      animation: fadein 1s ease forwards;
     }
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .slideshow {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      width: 100%;
     }
-    .photo-frame {
+    .slide-column {
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .slide {
+      width: 100%;
+      height: 150px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .center-content {
+      margin: 30px auto;
+      text-align: center;
+      max-width: 600px;
+    }
+    .video-frame {
+      width: 100%;
+      max-width: 300px;
+      height: 300px;
+      margin: 0 auto;
       border: 6px solid #106600;
       border-radius: 12px;
       overflow: hidden;
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 20px;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     h1 {
-      font-size: 2.3rem;
-      margin: 0.4em 0 0.2em;
+      font-size: 2rem;
+      margin: 15px 0 5px;
     }
     .name {
       font-weight: bold;
       font-size: 1.2rem;
       margin-bottom: 20px;
-      letter-spacing: 1px;
     }
     .btn {
       background-color: #106600;
       color: white;
-      padding: 10px 24px;
+      padding: 10px 20px;
       font-size: 1rem;
       border: none;
       border-radius: 8px;
@@ -69,92 +84,84 @@
       margin-top: 15px;
     }
     .message-box {
-      margin-top: 25px;
       display: none;
-      font-size: 1.1rem;
+      margin-top: 20px;
       padding: 15px;
       background: #ecf9ec;
       border-left: 5px solid #106600;
       border-radius: 10px;
-      min-height: 80px;
+      font-size: 1rem;
     }
-    .audio-tip {
-      font-size: 0.9rem;
-      color: #2e7d32;
-      margin-top: 10px;
+    @media (max-width: 768px) {
+      .slideshow {
+        flex-direction: column;
+        align-items: center;
+      }
+      .slide-column {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div id="countdown">5</div>
-
-  <div class="card" id="card">
-    <div class="photo-frame">
-      <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+  <div class="container">
+    <div class="slideshow">
+      <div class="slide-column">
+        <div class="slide"><img src="public/slide1.jpg" alt="Slide 1"></div>
+        <div class="slide"><img src="public/slide2.jpg" alt="Slide 2"></div>
+        <div class="slide"><img src="public/slide3.jpg" alt="Slide 3"></div>
+      </div>
+      <div class="slide-column">
+        <div class="slide"><img src="public/slide4.jpg" alt="Slide 4"></div>
+        <div class="slide"><img src="public/slide5.jpg" alt="Slide 5"></div>
+        <div class="slide"><img src="public/slide6.jpg" alt="Slide 6"></div>
+      </div>
     </div>
-    <h1>🎉 Happy Birthday 🎉</h1>
-    <div class="name">Dr. Nelia S. Raganas</div>
-    <button class="btn" onclick="showMessages()">See Messages</button>
-    <div class="message-box" id="messageBox">Loading messages...</div>
-    <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
+
+    <div class="center-content">
+      <div class="video-frame">
+        <video src="public/celebrant.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <h1>🎉 Happy Birthday 🎉</h1>
+      <div class="name">Dr. Nelia S. Raganas</div>
+      <button class="btn" onclick="showMessages()">See Messages</button>
+      <div class="message-box" id="messageBox">Loading messages...</div>
+    </div>
   </div>
 
   <audio id="music" loop>
-    <source src="birthday.mp3" type="audio/mp3">
+    <source src="public/birthday.mp3" type="audio/mp3">
   </audio>
 
   <script>
-    const countdownEl = document.getElementById('countdown');
-    const card = document.getElementById('card');
-    const music = document.getElementById('music');
-    let count = 5;
-
-    const countdownInterval = setInterval(() => {
-      count--;
-      if (count > 0) {
-        countdownEl.textContent = count;
-      } else {
-        clearInterval(countdownInterval);
-        countdownEl.style.display = 'none';
-        card.style.display = 'block';
-      }
-    }, 1000);
-
-    // Music autoplay workaround
+    // Play music after user interaction
     window.addEventListener('click', function () {
-      music.play().catch((e) => {
-        console.log("Audio blocked until interaction", e);
-      });
+      const music = document.getElementById("music");
+      music.play().catch(() => {});
     });
 
-    let messages = [];
-    let currentIndex = 0;
-    let interval;
-    let messageBox = document.getElementById("messageBox");
-
     function showMessages() {
-      document.querySelector(".btn").style.display = "none";
+      const btn = document.querySelector(".btn");
+      const box = document.getElementById("messageBox");
+      btn.style.display = "none";
       fetch("/messages")
         .then(res => res.json())
         .then(data => {
-          messages = data;
-          if (messages.length === 0) {
-            messageBox.style.display = "block";
-            messageBox.innerText = "No messages yet.";
-            return;
+          if (data.length === 0) {
+            box.innerText = "No messages yet.";
+          } else {
+            box.innerText = data[0];
+            let index = 1;
+            box.style.display = "block";
+            let interval = setInterval(() => {
+              if (index < data.length) {
+                box.innerText = data[index++];
+              } else {
+                clearInterval(interval);
+                box.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
+              }
+            }, 3000);
           }
-          messageBox.style.display = "block";
-          messageBox.innerText = messages[0];
-          interval = setInterval(() => {
-            currentIndex++;
-            if (currentIndex < messages.length) {
-              messageBox.innerText = messages[currentIndex];
-            } else {
-              clearInterval(interval);
-              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
-            }
-          }, 3000);
         });
     }
   </script>
