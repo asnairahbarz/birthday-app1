@@ -1,90 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Leave a Birthday Message</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write a Message for Dr. Nelia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      background: #f0fff0;
       font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .form-container {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 400px;
+      background: linear-gradient(to right, #e1bee7, #fff3e0);
       text-align: center;
-      border: 3px solid #106600;
+      padding: 40px;
     }
-    h2 {
-      margin-bottom: 20px;
-      color: #106600;
+    h1 {
+      color: #6a1b9a;
     }
     textarea {
       width: 100%;
-      height: 120px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      resize: vertical;
-    }
-    button {
-      margin-top: 15px;
-      background: #106600;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
+      max-width: 500px;
+      height: 100px;
+      padding: 12px;
       font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+    .button {
+      background-color: #8e24aa;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
     }
     .success {
       color: green;
-      margin-top: 15px;
+      margin-top: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Leave Your Message 🎉</h2>
-    <form id="messageForm">
-      <textarea id="message" placeholder="Write your birthday greeting here..." required></textarea><br>
-      <button type="submit">Submit</button>
-    </form>
-    <a href="celebrant.html" style="display:block; margin-top:20px;">Go to Celebrant Page</a>
-    <div class="success" id="successMsg" style="display:none;">Message submitted! 🎉</div>
-  </div>
+  <h1>Write Your Birthday Greeting to Dr. Nelia</h1>
+  <textarea id="messageBox" placeholder="Type your message here..."></textarea><br>
+  <button class="button" onclick="submitMessage()">Submit Message</button>
+  <a href="celebrant.html" style="display:block; margin-top:20px;">Go to Celebrant Page</a>
+  <div class="success" id="successMsg"></div>
 
   <script>
-    const form = document.getElementById("messageForm");
-    const successMsg = document.getElementById("successMsg");
+    function submitMessage() {
+      const msg = document.getElementById("messageBox").value.trim();
+      const successMsg = document.getElementById("successMsg");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const msg = document.getElementById("message").value.trim();
-      if (!msg) return;
+      if (msg === "") {
+        successMsg.style.color = "red";
+        successMsg.textContent = "Please write a message.";
+        return;
+      }
 
-      fetch("/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      fetch('/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg })
       })
       .then(res => res.json())
       .then(data => {
-        successMsg.style.display = "block";
-        form.reset();
-        setTimeout(() => successMsg.style.display = "none", 3000);
+        successMsg.style.color = "green";
+        successMsg.textContent = "Message submitted successfully!";
+        document.getElementById("messageBox").value = "";
       });
-    });
+    }
   </script>
 </body>
 </html>
