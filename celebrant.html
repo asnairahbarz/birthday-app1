@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
     body {
       margin: 0;
@@ -34,6 +35,35 @@
     @keyframes fadeInLine {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    #countdown {
+      font-size: 10rem;
+      font-weight: bold;
+      margin-top: 40vh;
+      color: #FFFFFF;
+      animation: pop 1s ease-in-out;
+      display: none;
+    }
+    #birthday-banner {
+      display: none;
+      font-size: 3rem;
+      font-family: 'Pacifico', cursive;
+      color: #fff;
+      background: linear-gradient(45deg, #ff3399, #ffcc00);
+      padding: 20px 40px;
+      border-radius: 20px;
+      margin: 30px auto;
+      width: fit-content;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      animation: sparkle 2s infinite alternate ease-in-out;
+    }
+    @keyframes sparkle {
+      0% { transform: scale(1); text-shadow: 0 0 5px #fff; }
+      100% { transform: scale(1.05); text-shadow: 0 0 20px #fff, 0 0 30px #ffcc00, 0 0 40px #ff3399; }
+    }
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0.2; }
+      100% { transform: scale(1); opacity: 1; }
     }
     #personal-greeting {
       display: none;
@@ -64,7 +94,7 @@
     }
     #continueBtn {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 10px 24px;
       font-size: 1rem;
       border: none;
       background-color: #106600;
@@ -73,142 +103,24 @@
       cursor: pointer;
       animation: fadeInText 2s ease-in-out forwards;
     }
-    #countdown {
-      font-size: 10rem;
-      font-weight: bold;
-      margin-top: 40vh;
-      color: #FFFFFF;
-      animation: pop 1s ease-in-out;
-      display: none;
-    }
-    @keyframes pop {
-      0% { transform: scale(0.8); opacity: 0.2; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .container {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    .slider-wrapper {
-      width: 300px;
-      height: 300px;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      margin: 10px;
-    }
-    .slider {
-      display: flex;
-      width: 300%;
-      height: 100%;
-      animation: slideImages 6s infinite;
-    }
-    .slider img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-    @keyframes slideImages {
-      0%   { transform: translateX(0%); }
-      33%  { transform: translateX(0%); }
-      34%  { transform: translateX(-100%); }
-      66%  { transform: translateX(-100%); }
-      67%  { transform: translateX(-200%); }
-      100% { transform: translateX(-200%); }
-    }
-    .card {
-      width: 320px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      animation: fadein 1s ease forwards;
-      margin: 0 20px;
-    }
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .photo-frame {
-      border: 6px solid #106600;
-      border-radius: 12px;
-      overflow: hidden;
-      width: 250px;
-      height: 250px;
-      margin: 0 auto 20px;
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .slider-wrapper {
-        width: 90%;
-        height: 200px;
-      }
-      .card {
-        width: 90%;
-      }
-      .photo-frame {
-        width: 90%;
-        height: auto;
-      }
-    }
   </style>
 </head>
 <body>
-  <div id="dialog-section">
-    <div class="dialog-line" style="animation-delay: 0s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
-    <div class="dialog-line" style="animation-delay: 2s">Click anywhere on the screen to begin the celebration countdown! 🎉</div>
-  </div>
-
-  <div id="countdown">5</div>
-
+  <div id="countdown">10</div>
+  <div id="birthday-banner">🎉 Happy Birthday, Dr. Nelia! 🎉</div>
   <div id="personal-greeting">
-    <p style="--delay: 0s">Happy Birthday, Dr. Raganas!</p>
+    <p style="--delay: 0.5s">Happy Birthday, Dr. Raganas!</p>
     <p style="--delay: 1s">On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.</p>
-    <p style="--delay: 2s">Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
-    <p style="--delay: 3s">May this year bring you continued success, good health, and moments of joy both in your professional and personal life.</p>
-    <p style="--delay: 4s">You truly deserve all the best that life has to offer.</p>
-    <p style="--delay: 5s">Wishing you a wonderful birthday and many more to come!</p>
-    <p style="--delay: 6s">Respectfully,<br>Asnairah</p>
-    <button id="continueBtn" onclick="continueToMain()">Continue</button>
+    <p style="--delay: 1.5s">Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
+    <p style="--delay: 2s">May this year bring you continued success, good health, and moments of joy both in your professional and personal life.</p>
+    <p style="--delay: 2.5s">You truly deserve all the best that life has to offer.</p>
+    <p style="--delay: 3s">Wishing you a wonderful birthday and many more to come!</p>
+    <p style="--delay: 3.5s">Respectfully,<br>Asnairah</p>
+    <button id="continueBtn">Continue</button>
   </div>
 
-  <div class="container" id="main-content">
-    <div class="slider-wrapper">
-      <div class="slider">
-        <img src="slide1.jpg" alt="Slide 1">
-        <img src="slide2.jpg" alt="Slide 2">
-        <img src="slide3.jpg" alt="Slide 3">
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="photo-frame">
-        <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
-      </div>
-      <h1>🎉 Happy Birthday 🎉</h1>
-      <div class="name">Dr. Nelia S. Raganas</div>
-      <button class="btn" onclick="showMessages()">See Messages</button>
-      <div class="message-box" id="messageBox">Loading messages...</div>
-      <div class="audio-tip">🔊 Tap anywhere to feel the moment</div>
-    </div>
-
-    <div class="slider-wrapper">
-      <div class="slider">
-        <img src="slide4.jpg" alt="Slide 4">
-        <img src="slide5.jpg" alt="Slide 5">
-        <img src="slide6.jpg" alt="Slide 6">
-      </div>
-    </div>
-  </div>
-
-  <audio id="music" loop>
-    <source src="birthday.mp3" type="audio/mp3">
+  <audio id="countdownSound">
+    <source src="countdown.mp3" type="audio/mp3">
   </audio>
   <audio id="letterMusic">
     <source src="letter.mp3" type="audio/mp3">
@@ -216,17 +128,18 @@
 
   <script>
     const countdownEl = document.getElementById('countdown');
-    const mainContent = document.getElementById('main-content');
-    const music = document.getElementById('music');
-    const letterMusic = document.getElementById('letterMusic');
-    const dialogSection = document.getElementById('dialog-section');
+    const banner = document.getElementById('birthday-banner');
     const personalGreeting = document.getElementById('personal-greeting');
-    let count = 5;
+    const countdownSound = document.getElementById("countdownSound");
+    const letterMusic = document.getElementById("letterMusic");
+    const continueBtn = document.getElementById("continueBtn");
+
+    let count = 10;
     let countdownInterval;
 
     function startCountdown() {
-      dialogSection.style.display = 'none';
       countdownEl.style.display = 'block';
+      countdownSound.play();
       countdownInterval = setInterval(() => {
         count--;
         if (count > 0) {
@@ -234,52 +147,20 @@
         } else {
           clearInterval(countdownInterval);
           countdownEl.style.display = 'none';
-          personalGreeting.style.display = 'block';
-          letterMusic.play();
+          banner.style.display = 'block';
         }
       }, 1000);
     }
 
-    function continueToMain() {
-      personalGreeting.style.display = 'none';
-      letterMusic.pause();
-      mainContent.style.display = 'flex';
-      music.play();
-    }
-
-    window.addEventListener('click', function () {
-      if (!countdownInterval) startCountdown();
+    countdownSound.addEventListener('ended', () => {
+      banner.style.display = 'none';
+      personalGreeting.style.display = 'block';
+      letterMusic.play();
     });
 
-    let messages = [];
-    let currentIndex = 0;
-    let interval;
-    let messageBox = document.getElementById("messageBox");
-
-    function showMessages() {
-      document.querySelector(".btn").style.display = "none";
-      fetch("/messages")
-        .then(res => res.json())
-        .then(data => {
-          messages = data;
-          if (messages.length === 0) {
-            messageBox.style.display = "block";
-            messageBox.innerText = "No messages yet.";
-            return;
-          }
-          messageBox.style.display = "block";
-          messageBox.innerText = messages[0];
-          interval = setInterval(() => {
-            currentIndex++;
-            if (currentIndex < messages.length) {
-              messageBox.innerText = messages[currentIndex];
-            } else {
-              clearInterval(interval);
-              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
-            }
-          }, 3000);
-        });
-    }
+    document.body.addEventListener('click', function () {
+      if (!countdownInterval) startCountdown();
+    });
   </script>
 </body>
 </html>
