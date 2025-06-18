@@ -200,6 +200,7 @@
 </head>
 <body>
   <video id="video-background" src="celebrant-video-bg.mp4" autoplay muted loop></video>
+
   <div id="welcome-dialog">
     <div class="type-line" style="animation-delay:0s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
     <div class="type-line" style="animation-delay:1s">Click anywhere on the screen to begin the celebration countdown!</div>
@@ -217,7 +218,7 @@
     <button id="continueBtn">Continue</button>
   </div>
 
-   <div class="container" style="display: none; justify-content: center; align-items: center; margin-top: 30px; flex-wrap: wrap;">
+  <div class="container" style="display: none; justify-content: center; align-items: center; margin-top: 30px; flex-wrap: wrap;">
     <div class="card">
       <div class="photo-frame">
         <video src="celebrant.mp4" autoplay muted loop playsinline></video>
@@ -239,6 +240,7 @@
     const image = document.getElementById('center-image');
     const letter = document.getElementById('letter-panel');
     const continueBtn = document.getElementById('continueBtn');
+    const videoBg = document.getElementById('video-background');
 
     let count = 10;
     const countdownSound = new Audio('countdown.mp3');
@@ -267,7 +269,7 @@
               letter.style.display = 'block';
               letterMusic.play();
             }, 5000);
-          }, 0); // Show banner and image immediately after countdown ends
+          }, 0);
         }
       }, 1000);
     }
@@ -281,7 +283,6 @@
       document.querySelector('.container').style.display = 'flex';
       birthdayMusic.play();
     });
-
 
     let messages = [];
     let currentIndex = 0;
