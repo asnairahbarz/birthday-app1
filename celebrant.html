@@ -132,7 +132,7 @@
       width: 300%;
       height: 100%;
       display: flex;
-      animation: slideImages 9s infinite;
+      animation: slideImages 18s infinite;
     }
     .slider img {
       width: 100%;
@@ -140,16 +140,10 @@
       object-fit: contain;
       flex-shrink: 0;
     }
-   @keyframes slideImages {
-  0%, 33.33% {
-    transform: translateX(0);
-  }
-  33.34%, 66.66% {
-    transform: translateX(-100%);
-  }
-  66.67%, 100% {
-    transform: translateX(-200%);
-  }
+  @keyframes slideImages {
+  0%, 20% { transform: translateX(0); }
+  33%, 53% { transform: translateX(-100%); }
+  66%, 100% { transform: translateX(-200%); }
 }
     .card {
       width: 320px;
