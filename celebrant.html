@@ -16,6 +16,19 @@
       color: #106600;
       overflow-x: hidden;
     }
+    body.video-bg {
+      background: none;
+    }
+    #video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      display: none;
+    }
     #welcome-dialog {
       margin: 25vh auto 0;
       max-width: 600px;
@@ -186,6 +199,7 @@
   </style>
 </head>
 <body>
+  <video id="video-background" src="celebrant-video-bg.mp4" autoplay muted loop></video>
   <div id="welcome-dialog">
     <div class="type-line" style="animation-delay:0s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
     <div class="type-line" style="animation-delay:1s">Click anywhere on the screen to begin the celebration countdown!</div>
@@ -262,9 +276,12 @@
 
     continueBtn.addEventListener('click', () => {
       letter.style.display = 'none';
+      document.body.classList.add('video-bg');
+      videoBg.style.display = 'block';
       document.querySelector('.container').style.display = 'flex';
       birthdayMusic.play();
     });
+
 
     let messages = [];
     let currentIndex = 0;
