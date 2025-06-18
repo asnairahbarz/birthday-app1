@@ -25,15 +25,49 @@
       0% { transform: scale(0.8); opacity: 0.2; }
       100% { transform: scale(1); opacity: 1; }
     }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .slider-wrapper {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin: 10px;
+    }
+    .slider {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      animation: slideImages 6s infinite;
+    }
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes slideImages {
+      0%   { transform: translateX(0%); }
+      33%  { transform: translateX(0%); }
+      34%  { transform: translateX(-100%); }
+      66%  { transform: translateX(-100%); }
+      67%  { transform: translateX(-200%); }
+      100% { transform: translateX(-200%); }
+    }
     .card {
-      max-width: 500px;
-      margin: 40px auto;
+      width: 320px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       display: none;
       animation: fadein 1s ease forwards;
+      margin: 0 20px;
     }
     @keyframes fadein {
       from { opacity: 0; transform: translateY(30px); }
@@ -82,21 +116,51 @@
       color: #2e7d32;
       margin-top: 10px;
     }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .slider-wrapper {
+        width: 90%;
+        height: 120px;
+      }
+      .card {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div id="countdown">5</div>
 
-  <div class="card" id="card">
-    <div class="photo-frame">
-      <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+  <div class="container" id="card">
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide1.jpg" alt="Slide 1">
+        <img src="slide2.jpg" alt="Slide 2">
+        <img src="slide3.jpg" alt="Slide 3">
+      </div>
     </div>
-    <h1>🎉 Happy Birthday 🎉</h1>
-    <div class="name">Dr. Nelia S. Raganas</div>
-    <button class="btn" onclick="showMessages()">See Messages</button>
-    <div class="message-box" id="messageBox">Loading messages...</div>
-    <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
+
+    <div class="card">
+      <div class="photo-frame">
+        <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+      </div>
+      <h1>🎉 Happy Birthday 🎉</h1>
+      <div class="name">Dr. Nelia S. Raganas</div>
+      <button class="btn" onclick="showMessages()">See Messages</button>
+      <div class="message-box" id="messageBox">Loading messages...</div>
+      <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
+    </div>
+
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide4.jpg" alt="Slide 4">
+        <img src="slide5.jpg" alt="Slide 5">
+        <img src="slide6.jpg" alt="Slide 6">
+      </div>
+    </div>
   </div>
 
   <audio id="music" loop>
@@ -116,11 +180,10 @@
       } else {
         clearInterval(countdownInterval);
         countdownEl.style.display = 'none';
-        card.style.display = 'block';
+        card.style.display = 'flex';
       }
     }, 1000);
 
-    // Music autoplay workaround
     window.addEventListener('click', function () {
       music.play().catch((e) => {
         console.log("Audio blocked until interaction", e);
