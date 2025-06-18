@@ -5,6 +5,8 @@
   <title>Happy Birthday Dr. Nelia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
     body {
       margin: 0;
       padding: 0;
@@ -14,12 +16,44 @@
       text-align: center;
       color: #106600;
     }
+    #dialog-section {
+      margin-top: 20px;
+    }
+    .message {
+      background: rgba(255,255,255,0.9);
+      border: 2px solid #106600;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px auto;
+      width: 80%;
+      max-width: 500px;
+      font-size: 1rem;
+    }
+    #personal-greeting {
+      display: none;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      line-height: 1.6;
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      border: 2px solid #106600;
+      animation: fadeInText 2s ease-in-out forwards;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     #countdown {
       font-size: 10rem;
       font-weight: bold;
       margin-top: 40vh;
       color: #FFFFFF;
       animation: pop 1s ease-in-out;
+      display: none;
     }
     @keyframes pop {
       0% { transform: scale(0.8); opacity: 0.2; }
@@ -136,7 +170,20 @@
 </head>
 <body>
 
+  <div id="dialog-section">
+    <div class="message">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
+    <div class="message">Click anywhere on the screen to begin the celebration countdown! 🎉</div>
+  </div>
+
   <div id="countdown">5</div>
+
+  <div id="personal-greeting">
+    <p>Happy Birthday, Dr. Raganas!</p>
+    <p>On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support. Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
+    <p>May this year bring you continued success, good health, and moments of joy both in your professional and personal life. You truly deserve all the best that life has to offer.</p>
+    <p>Wishing you a wonderful birthday and many more to come!</p>
+    <p>Respectfully,<br>Asnairah</p>
+  </div>
 
   <div class="container" id="main-content">
     <div class="slider-wrapper">
@@ -155,7 +202,7 @@
       <div class="name">Dr. Nelia S. Raganas</div>
       <button class="btn" onclick="showMessages()">See Messages</button>
       <div class="message-box" id="messageBox">Loading messages...</div>
-      <div class="audio-tip">🔊 Tap anywhere to feel the momment</div>
+      <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
     </div>
 
     <div class="slider-wrapper">
@@ -175,23 +222,36 @@
     const countdownEl = document.getElementById('countdown');
     const mainContent = document.getElementById('main-content');
     const music = document.getElementById('music');
+    const dialogSection = document.getElementById('dialog-section');
+    const personalGreeting = document.getElementById('personal-greeting');
     let count = 5;
+    let countdownInterval;
 
-    const countdownInterval = setInterval(() => {
-      count--;
-      if (count > 0) {
-        countdownEl.textContent = count;
-      } else {
-        clearInterval(countdownInterval);
-        countdownEl.style.display = 'none';
-        mainContent.style.display = 'flex';
-      }
-    }, 1000);
+    function startCountdown() {
+      dialogSection.style.display = 'none';
+      countdownEl.style.display = 'block';
+
+      countdownInterval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          countdownEl.textContent = count;
+        } else {
+          clearInterval(countdownInterval);
+          countdownEl.style.display = 'none';
+          personalGreeting.style.display = 'block';
+          setTimeout(() => {
+            personalGreeting.style.display = 'none';
+            mainContent.style.display = 'flex';
+          }, 12000);
+        }
+      }, 1000);
+    }
 
     window.addEventListener('click', function () {
       music.play().catch((e) => {
         console.log("Audio blocked until interaction", e);
       });
+      if (!countdownInterval) startCountdown();
     });
 
     let messages = [];
