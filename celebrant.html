@@ -184,7 +184,7 @@
   <audio id="music" loop>
     <source src="birthday.mp3" type="audio/mp3">
   </audio>
-  <audio id="letterMusic" autoplay loop>
+  <audio id="letterMusic">
     <source src="letter.mp3" type="audio/mp3">
   </audio>
 
@@ -218,10 +218,10 @@
       personalGreeting.style.display = 'none';
       letterMusic.pause();
       mainContent.style.display = 'flex';
+      music.play();
     }
 
     window.addEventListener('click', function () {
-      music.play().catch((e) => console.log("Audio blocked", e));
       if (!countdownInterval) startCountdown();
     });
 
