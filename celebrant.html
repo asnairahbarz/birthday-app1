@@ -164,6 +164,157 @@
   </style>
 </head>
 <body>
-  <!-- countdown.mp3 is already included as countdownAudio -->
+  <div id="welcome-dialog">
+    <div class="type-line" id="line1">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
+    <div class="type-line" id="line2">Click anywhere on the screen to begin the celebration countdown!</div>
+  </div>
+
+  <div id="countdown">10</div>
+  <div id="banner">🎉 Happy Birthday Dr. Nelia 🎉</div>
+  <img id="center-image" src="celebrant-pic.png" alt="Celebrant">
+  <div id="letter-panel"></div>
+
+  <div class="container">
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide1.jpg" alt="Slide 1">
+        <img src="slide2.jpg" alt="Slide 2">
+        <img src="slide3.jpg" alt="Slide 3">
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo-frame">
+        <video src="celebrant.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <h1>🎉 Happy Birthday 🎉</h1>
+      <div class="name">Dr. Nelia S. Raganas</div>
+      <button class="btn" onclick="showMessages()">See Messages</button>
+      <div class="message-box" id="messageBox">Loading messages...</div>
+    </div>
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide4.jpg" alt="Slide 4">
+        <img src="slide5.jpg" alt="Slide 5">
+        <img src="slide6.jpg" alt="Slide 6">
+      </div>
+    </div>
+  </div>
+
+  <audio id="letterAudio" src="letter.mp3"></audio>
+  <audio id="music" src="birthday.mp3" loop></audio>
+  <audio id="countdownAudio" src="countdown.mp3"></audio>
+
+  <script>
+    const countdownEl = document.getElementById('countdown');
+    const banner = document.getElementById('banner');
+    const image = document.getElementById('center-image');
+    const letterPanel = document.getElementById('letter-panel');
+    const welcome = document.getElementById('welcome-dialog');
+    const music = document.getElementById('music');
+    const letterAudio = document.getElementById('letterAudio');
+    const countdownAudio = document.getElementById('countdownAudio');
+
+    const lines = document.querySelectorAll('.type-line');
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        line.style.opacity = 1;
+      }, i * 2000);
+    });
+
+    const letterLines = [
+      "Happy Birthday, Dr. Raganas!",
+      "On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.",
+      "Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.",
+      "May this year bring you continued success, good health, and moments of joy both in your professional and personal life.",
+      "You truly deserve all the best that life has to offer.",
+      "Wishing you a wonderful birthday and many more to come!",
+      "Respectfully,<br/>Asnairah"
+    ];
+
+    function showLetterLine(index) {
+      if (index < letterLines.length) {
+        const line = document.createElement('p');
+        line.innerHTML = letterLines[index];
+        line.style.opacity = 0;
+        letterPanel.appendChild(line);
+        setTimeout(() => {
+          line.style.transition = 'opacity 1s';
+          line.style.opacity = 1;
+          showLetterLine(index + 1);
+        }, 1800);
+      } else {
+        const btn = document.createElement('button');
+        btn.textContent = "Continue";
+        btn.className = "btn";
+        btn.onclick = () => {
+          letterAudio.pause();
+          letterPanel.style.display = 'none';
+          document.querySelector('.container').style.display = 'flex';
+          music.play();
+        };
+        letterPanel.appendChild(btn);
+      }
+    }
+
+    function startCountdown() {
+      welcome.style.display = 'none';
+      countdownEl.style.display = 'block';
+      countdownAudio.play();
+
+      let count = 10;
+      countdownEl.textContent = count;
+      const interval = setInterval(() => {
+        count--;
+        countdownEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(interval);
+          countdownAudio.onended = () => {
+            countdownEl.style.display = 'none';
+            banner.style.display = 'block';
+            image.style.display = 'block';
+            setTimeout(() => {
+              banner.style.display = 'none';
+              image.style.display = 'none';
+              letterPanel.style.display = 'block';
+              letterAudio.play();
+              showLetterLine(0);
+            }, 5000);
+          };
+        }
+      }, 1000);
+    }
+
+    window.addEventListener('click', startCountdown, { once: true });
+
+    let messages = [];
+    let currentIndex = 0;
+    let interval;
+    const messageBox = document.getElementById("messageBox");
+
+    function showMessages() {
+      document.querySelector(".btn").style.display = "none";
+      fetch("/messages")
+        .then(res => res.json())
+        .then(data => {
+          messages = data;
+          if (messages.length === 0) {
+            messageBox.style.display = "block";
+            messageBox.innerText = "No messages yet.";
+            return;
+          }
+          messageBox.style.display = "block";
+          messageBox.innerText = messages[0];
+          interval = setInterval(() => {
+            currentIndex++;
+            if (currentIndex < messages.length) {
+              messageBox.innerText = messages[currentIndex];
+            } else {
+              clearInterval(interval);
+              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
+            }
+          }, 3000);
+        });
+    }
+  </script>
 </body>
 </html>
