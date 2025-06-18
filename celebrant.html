@@ -6,7 +6,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&family=Segoe+UI&display=swap" rel="stylesheet">
   <style>
-    /* [unchanged styles above] */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8fff8 url('floral-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+      color: #106600;
+    }
+    #welcome-dialog {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 80%;
+      font-family: 'Segoe UI', cursive;
+    }
+    .type-line {
+      font-size: 1.5rem;
+      margin: 10px 0;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    #countdown {
+      font-size: 10rem;
+      font-weight: bold;
+      margin-top: 40vh;
+      color: #FFFFFF;
+      display: none;
+    }
+    #banner {
+      font-size: 2.5rem;
+      color: gold;
+      background: linear-gradient(45deg, #ff6, #fc0, #ff6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glitter 1s infinite alternate;
+      display: none;
+    }
+    @keyframes glitter {
+      from { text-shadow: 0 0 5px #fff; }
+      to { text-shadow: 0 0 15px #ff0, 0 0 20px #f0f; }
+    }
+    #center-image {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 15px #106600;
+      animation: float 2s ease-in-out infinite alternate;
+      display: none;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-15px); }
+    }
+    #letter-panel {
+      display: none;
+      max-width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background: #ffffffdd;
+      border-radius: 12px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+    }
+    .container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .slider-wrapper {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin: 10px;
+    }
+    .slider {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      animation: slideImages 6s infinite;
+    }
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    @keyframes slideImages {
+      0%, 33% { transform: translateX(0); }
+      34%, 66% { transform: translateX(-100%); }
+      67%, 100% { transform: translateX(-200%); }
+    }
+    .card {
+      width: 320px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      animation: fadein 1s ease forwards;
+      margin: 0 20px;
+    }
+    .photo-frame {
+      border: 6px solid #106600;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 20px;
+    }
+    h1 {
+      font-size: 2.3rem;
+      margin: 0.4em 0 0.2em;
+    }
+    .name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .btn {
+      background-color: #106600;
+      color: white;
+      padding: 10px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: transform 0.3s ease, background 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      background-color: #138000;
+    }
+    .message-box {
+      margin-top: 25px;
+      display: none;
+      font-size: 1.1rem;
+      padding: 15px;
+      background: #ecf9ec;
+      border-left: 5px solid #106600;
+      border-radius: 10px;
+      min-height: 80px;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +214,13 @@
     const letterAudio = document.getElementById('letterAudio');
     const countdownAudio = document.getElementById('countdownAudio');
 
+    const lines = document.querySelectorAll('.type-line');
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        line.style.opacity = 1;
+      }, i * 2000);
+    });
+
     const letterLines = [
       "Happy Birthday, Dr. Raganas!",
       "On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.",
@@ -84,7 +245,7 @@
       } else {
         const btn = document.createElement('button');
         btn.textContent = "Continue";
-        btn.id = "continueBtn";
+        btn.className = "btn";
         btn.onclick = () => {
           letterAudio.pause();
           letterPanel.style.display = 'none';
