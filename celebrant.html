@@ -18,7 +18,7 @@
       font-size: 10rem;
       font-weight: bold;
       margin-top: 40vh;
-      color:#FFFFFF;
+      color: #FFFFFF;
       animation: pop 1s ease-in-out;
     }
     @keyframes pop {
@@ -26,7 +26,7 @@
       100% { transform: scale(1); opacity: 1; }
     }
     .container {
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
       margin-top: 30px;
@@ -65,7 +65,6 @@
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: none;
       animation: fadein 1s ease forwards;
       margin: 0 20px;
     }
@@ -134,7 +133,7 @@
 
   <div id="countdown">5</div>
 
-  <div class="container" id="card">
+  <div class="container" id="main-content">
     <div class="slider-wrapper">
       <div class="slider">
         <img src="slide1.jpg" alt="Slide 1">
@@ -169,7 +168,7 @@
 
   <script>
     const countdownEl = document.getElementById('countdown');
-    const card = document.getElementById('card');
+    const mainContent = document.getElementById('main-content');
     const music = document.getElementById('music');
     let count = 5;
 
@@ -180,7 +179,7 @@
       } else {
         clearInterval(countdownInterval);
         countdownEl.style.display = 'none';
-        card.style.display = 'flex';
+        mainContent.style.display = 'flex';
       }
     }, 1000);
 
