@@ -17,10 +17,14 @@
       overflow-x: hidden;
     }
     #welcome-dialog {
-      margin-top: 30vh;
+      margin: 25vh auto 0;
+      max-width: 600px;
       font-size: 1.8rem;
       font-weight: bold;
-      padding: 20px;
+      padding: 30px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
       animation: fadeIn 1s ease-out;
     }
     .type-line {
@@ -61,7 +65,7 @@
     #center-image {
       display: none;
       margin: 30px auto 10px;
-      width: 160px;
+      width: 180px;
       animation: float 3s ease-in-out infinite, glow 1.5s ease-in-out infinite;
     }
     @keyframes float {
@@ -74,7 +78,7 @@
     }
     #letter-panel {
       display: none;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.95);
       max-width: 700px;
       margin: 30px auto;
       padding: 30px;
@@ -167,7 +171,6 @@
   </style>
 </head>
 <body>
-
   <div id="welcome-dialog">
     <div class="type-line" style="animation-delay:0.2s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
     <div class="type-line" style="animation-delay:1s">Click anywhere on the screen to begin the celebration countdown!</div>
@@ -224,10 +227,10 @@
     let image = document.getElementById('center-image');
     let letter = document.getElementById('letter-panel');
     let mainContent = document.getElementById('main-content');
-    let count = 10;
     let countdownSound = document.getElementById('countdownSound');
     let letterMusic = document.getElementById('letterMusic');
     let birthdayMusic = document.getElementById('birthdayMusic');
+    let count = 10;
 
     window.addEventListener('click', startCountdown, { once: true });
 
@@ -242,10 +245,12 @@
         if (count <= 0) {
           clearInterval(interval);
           countdownEl.style.display = 'none';
-          banner.style.display = 'block';
-          image.style.display = 'block';
-          letter.style.display = 'block';
-          letterMusic.play();
+          setTimeout(() => {
+            banner.style.display = 'block';
+            image.style.display = 'block';
+            letter.style.display = 'block';
+            letterMusic.play();
+          }, 5000);
         }
       }, 1000);
     }
