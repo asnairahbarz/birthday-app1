@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <title>Happy Birthday Dr. Nelia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
     body {
       margin: 0;
       padding: 0;
@@ -17,150 +15,85 @@
       text-align: center;
       color: #106600;
     }
-    #dialog-section {
-      margin-top: 20vh;
-    }
-    .dialog-line {
-      opacity: 0;
-      font-size: 1.6rem;
-      font-weight: bold;
+    .message-panel {
+      display: none;
       background: rgba(255,255,255,0.95);
-      padding: 15px 20px;
-      border-radius: 12px;
+      margin: 20px auto;
       max-width: 600px;
-      margin: 10px auto;
-      color: #106600;
-      animation: fadeInLine 1s ease-in-out forwards;
+      padding: 20px;
+      border: 3px solid #106600;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.2);
+      animation: fadeInText 1s ease forwards;
     }
-    @keyframes fadeInLine {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    #countdown {
-      font-size: 10rem;
-      font-weight: bold;
-      margin-top: 40vh;
-      color: #FFFFFF;
-      animation: pop 1s ease-in-out;
-      display: none;
-    }
-    #birthday-banner {
-      display: none;
-      font-size: 3rem;
-      font-family: 'Pacifico', cursive;
-      color: #fff;
-      background: linear-gradient(45deg, #ff3399, #ffcc00);
-      padding: 20px 40px;
-      border-radius: 20px;
-      margin: 30px auto;
-      width: fit-content;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-      animation: sparkle 2s infinite alternate ease-in-out;
-    }
-    @keyframes sparkle {
-      0% { transform: scale(1); text-shadow: 0 0 5px #fff; }
-      100% { transform: scale(1.05); text-shadow: 0 0 20px #fff, 0 0 30px #ffcc00, 0 0 40px #ff3399; }
-    }
-    @keyframes pop {
-      0% { transform: scale(0.8); opacity: 0.2; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    #personal-greeting {
-      display: none;
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.8rem;
-      line-height: 1.8;
-      width: 90%;
-      max-width: 700px;
-      margin: 40px auto;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 15px;
-      padding: 30px;
-      border: 2px solid #106600;
-      animation: fadeInText 2s ease-in-out forwards;
-    }
-    #personal-greeting p {
-      opacity: 0;
-      animation: fadeLine 1s ease forwards;
-      animation-delay: var(--delay);
-    }
-    @keyframes fadeLine {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInText {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    #continueBtn {
+    #seeMessagesBtn {
       margin-top: 20px;
-      padding: 10px 24px;
-      font-size: 1rem;
-      border: none;
       background-color: #106600;
       color: white;
-      border-radius: 8px;
+      padding: 12px 28px;
+      border: none;
+      font-size: 1.1rem;
+      border-radius: 10px;
       cursor: pointer;
-      animation: fadeInText 2s ease-in-out forwards;
+      transition: background 0.3s ease;
+    }
+    #seeMessagesBtn:hover {
+      background-color: #158c00;
+    }
+    #messagesOutput {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      white-space: pre-line;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div id="countdown">10</div>
-  <div id="birthday-banner">🎉 Happy Birthday, Dr. Nelia! 🎉</div>
-  <div id="personal-greeting">
-    <p style="--delay: 0.5s">Happy Birthday, Dr. Raganas!</p>
-    <p style="--delay: 1s">On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.</p>
-    <p style="--delay: 1.5s">Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
-    <p style="--delay: 2s">May this year bring you continued success, good health, and moments of joy both in your professional and personal life.</p>
-    <p style="--delay: 2.5s">You truly deserve all the best that life has to offer.</p>
-    <p style="--delay: 3s">Wishing you a wonderful birthday and many more to come!</p>
-    <p style="--delay: 3.5s">Respectfully,<br>Asnairah</p>
-    <button id="continueBtn">Continue</button>
+
+  <!-- Existing UI -->
+  <div id="messageBox" class="message-panel">
+    <button id="seeMessagesBtn" onclick="loadMessages()">📬 See Birthday Messages</button>
+    <div id="messagesOutput"></div>
   </div>
 
-  <audio id="countdownSound">
-    <source src="countdown.mp3" type="audio/mp3">
-  </audio>
-  <audio id="letterMusic">
-    <source src="letter.mp3" type="audio/mp3">
-  </audio>
-
   <script>
-    const countdownEl = document.getElementById('countdown');
-    const banner = document.getElementById('birthday-banner');
-    const personalGreeting = document.getElementById('personal-greeting');
-    const countdownSound = document.getElementById("countdownSound");
-    const letterMusic = document.getElementById("letterMusic");
-    const continueBtn = document.getElementById("continueBtn");
-
-    let count = 10;
-    let countdownInterval;
-
-    function startCountdown() {
-      countdownEl.style.display = 'block';
-      countdownSound.play();
-      countdownInterval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          countdownEl.textContent = count;
-        } else {
-          clearInterval(countdownInterval);
-          countdownEl.style.display = 'none';
-          banner.style.display = 'block';
-        }
-      }, 1000);
+    function loadMessages() {
+      const btn = document.getElementById('seeMessagesBtn');
+      const output = document.getElementById('messagesOutput');
+      btn.disabled = true;
+      btn.textContent = "Loading messages...";
+      fetch("/messages")
+        .then(response => response.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            let index = 0;
+            output.textContent = data[0];
+            const interval = setInterval(() => {
+              index++;
+              if (index < data.length) {
+                output.textContent = data[index];
+              } else {
+                clearInterval(interval);
+                btn.textContent = "🎊 That's all the greetings!";
+              }
+            }, 3000);
+          } else {
+            output.textContent = "No messages yet. Check back later.";
+          }
+        })
+        .catch(err => {
+          output.textContent = "Failed to load messages.";
+        });
     }
 
-    countdownSound.addEventListener('ended', () => {
-      banner.style.display = 'none';
-      personalGreeting.style.display = 'block';
-      letterMusic.play();
-    });
-
-    document.body.addEventListener('click', function () {
-      if (!countdownInterval) startCountdown();
+    // Optionally show message panel on load:
+    window.addEventListener("load", () => {
+      document.getElementById("messageBox").style.display = "block";
     });
   </script>
+
 </body>
 </html>
