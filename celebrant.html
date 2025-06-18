@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Happy Birthday Dr. Nelia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&family=Segoe+UI&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -14,86 +14,275 @@
       background-size: cover;
       text-align: center;
       color: #106600;
+      overflow-x: hidden;
     }
-    .message-panel {
-      display: none;
-      background: rgba(255,255,255,0.95);
-      margin: 20px auto;
-      max-width: 600px;
+    #welcome-dialog {
+      margin-top: 30vh;
+      font-size: 1.8rem;
+      font-weight: bold;
       padding: 20px;
-      border: 3px solid #106600;
-      border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.2);
-      animation: fadeInText 1s ease forwards;
+      animation: fadeIn 1s ease-out;
     }
-    #seeMessagesBtn {
+    .type-line {
+      opacity: 0;
+      animation: typeIn 0.8s ease forwards;
+    }
+    @keyframes typeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #countdown {
+      font-size: 8rem;
+      font-weight: bold;
+      margin-top: 20vh;
+      color: #ffffff;
+      display: none;
+    }
+    #banner {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px gold;
       margin-top: 20px;
-      background-color: #106600;
-      color: white;
-      padding: 12px 28px;
+      display: none;
+      animation: glitter 1.2s infinite alternate;
+    }
+    @keyframes glitter {
+      0% { text-shadow: 0 0 5px gold; }
+      100% { text-shadow: 0 0 20px #ffd700, 0 0 30px #ff0; }
+    }
+    #center-image {
+      display: none;
+      margin: 30px auto 10px;
+      width: 160px;
+      animation: float 3s ease-in-out infinite, glow 1.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 3px #aaffaa); }
+      100% { filter: drop-shadow(0 0 15px #ffffff); }
+    }
+    #letter-panel {
+      display: none;
+      background: rgba(255,255,255,0.9);
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 12px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      line-height: 2.4rem;
+      color: #2e7d32;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #continueBtn {
+      margin-top: 20px;
+      background: #106600;
+      color: #fff;
       border: none;
-      font-size: 1.1rem;
+      padding: 12px 28px;
+      font-size: 1rem;
       border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-    #seeMessagesBtn:hover {
-      background-color: #158c00;
+    .container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
     }
-    #messagesOutput {
-      margin-top: 20px;
+    .slider-wrapper {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin: 10px;
+    }
+    .slider {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      animation: slideImages 6s infinite;
+    }
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes slideImages {
+      0%, 33% { transform: translateX(0%); }
+      34%, 66% { transform: translateX(-100%); }
+      67%, 100% { transform: translateX(-200%); }
+    }
+    .card {
+      width: 320px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 0 20px;
+    }
+    .photo-frame video {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .btn {
+      background-color: #106600;
+      color: white;
+      padding: 10px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .message-box {
+      margin-top: 25px;
+      display: none;
       font-size: 1.1rem;
-      white-space: pre-line;
+      padding: 15px;
+      background: #ecf9ec;
+      border-left: 5px solid #106600;
+      border-radius: 10px;
+      min-height: 80px;
     }
-    @keyframes fadeInText {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .slider-wrapper, .card { width: 90%; height: auto; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Existing UI -->
-  <div id="messageBox" class="message-panel">
-    <button id="seeMessagesBtn" onclick="loadMessages()">📬 See Birthday Messages</button>
-    <div id="messagesOutput"></div>
+  <div id="welcome-dialog">
+    <div class="type-line" style="animation-delay:0.2s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
+    <div class="type-line" style="animation-delay:1s">Click anywhere on the screen to begin the celebration countdown!</div>
   </div>
 
+  <div id="countdown">10</div>
+  <div id="banner">🎉 Happy Birthday, Dr. Nelia! 🎉</div>
+  <img id="center-image" src="balloon.png" alt="Balloon" />
+
+  <div id="letter-panel">
+    <p>On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.</p>
+    <p>Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
+    <p>May this year bring you continued success, good health, and moments of joy both in your professional and personal life.</p>
+    <p>You truly deserve all the best that life has to offer.</p>
+    <p>Wishing you a wonderful birthday and many more to come!</p>
+    <p style="margin-top: 1rem;">Respectfully,<br/>Asnairah</p>
+    <button id="continueBtn">Continue</button>
+  </div>
+
+  <div class="container" id="main-content">
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide1.jpg" alt="Slide 1">
+        <img src="slide2.jpg" alt="Slide 2">
+        <img src="slide3.jpg" alt="Slide 3">
+      </div>
+    </div>
+    <div class="card">
+      <div class="photo-frame">
+        <video src="celebrant.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <h2>🎉 Happy Birthday 🎉</h2>
+      <div class="name">Dr. Nelia S. Raganas</div>
+      <button class="btn" onclick="showMessages()">See Messages</button>
+      <div class="message-box" id="messageBox">Loading messages...</div>
+    </div>
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img src="slide4.jpg" alt="Slide 4">
+        <img src="slide5.jpg" alt="Slide 5">
+        <img src="slide6.jpg" alt="Slide 6">
+      </div>
+    </div>
+  </div>
+
+  <audio id="countdownSound" src="countdown.mp3"></audio>
+  <audio id="letterMusic" src="letter.mp3" loop></audio>
+  <audio id="birthdayMusic" src="birthday.mp3" loop></audio>
+
   <script>
-    function loadMessages() {
-      const btn = document.getElementById('seeMessagesBtn');
-      const output = document.getElementById('messagesOutput');
-      btn.disabled = true;
-      btn.textContent = "Loading messages...";
-      fetch("/messages")
-        .then(response => response.json())
-        .then(data => {
-          if (Array.isArray(data) && data.length > 0) {
-            let index = 0;
-            output.textContent = data[0];
-            const interval = setInterval(() => {
-              index++;
-              if (index < data.length) {
-                output.textContent = data[index];
-              } else {
-                clearInterval(interval);
-                btn.textContent = "🎊 That's all the greetings!";
-              }
-            }, 3000);
-          } else {
-            output.textContent = "No messages yet. Check back later.";
-          }
-        })
-        .catch(err => {
-          output.textContent = "Failed to load messages.";
-        });
+    let countdownEl = document.getElementById('countdown');
+    let welcomeDialog = document.getElementById('welcome-dialog');
+    let banner = document.getElementById('banner');
+    let image = document.getElementById('center-image');
+    let letter = document.getElementById('letter-panel');
+    let mainContent = document.getElementById('main-content');
+    let count = 10;
+    let countdownSound = document.getElementById('countdownSound');
+    let letterMusic = document.getElementById('letterMusic');
+    let birthdayMusic = document.getElementById('birthdayMusic');
+
+    window.addEventListener('click', startCountdown, { once: true });
+
+    function startCountdown() {
+      welcomeDialog.style.display = 'none';
+      countdownEl.style.display = 'block';
+      countdownSound.play();
+
+      let interval = setInterval(() => {
+        count--;
+        countdownEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(interval);
+          countdownEl.style.display = 'none';
+          banner.style.display = 'block';
+          image.style.display = 'block';
+          letter.style.display = 'block';
+          letterMusic.play();
+        }
+      }, 1000);
     }
 
-    // Optionally show message panel on load:
-    window.addEventListener("load", () => {
-      document.getElementById("messageBox").style.display = "block";
+    document.getElementById('continueBtn').addEventListener('click', () => {
+      letter.style.display = 'none';
+      banner.style.display = 'none';
+      image.style.display = 'none';
+      mainContent.style.display = 'flex';
+      letterMusic.pause();
+      birthdayMusic.play();
     });
-  </script>
 
+    function showMessages() {
+      const messageBox = document.getElementById("messageBox");
+      fetch("/messages")
+        .then(res => res.json())
+        .then(data => {
+          if (!data.length) {
+            messageBox.innerText = "No messages yet.";
+            messageBox.style.display = "block";
+            return;
+          }
+          let i = 0;
+          messageBox.innerText = data[i];
+          messageBox.style.display = "block";
+          const interval = setInterval(() => {
+            i++;
+            if (i < data.length) {
+              messageBox.innerText = data[i];
+            } else {
+              clearInterval(interval);
+              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
+            }
+          }, 3000);
+        });
+    }
+  </script>
 </body>
 </html>
