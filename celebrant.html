@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,11 +47,6 @@
       height: 200px;
       margin: 0 auto 20px;
     }
-    .photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
     h1 {
       font-size: 2.3rem;
       margin: 0.4em 0 0.2em;
@@ -96,13 +90,13 @@
 
   <div class="card" id="card">
     <div class="photo-frame">
-      <img src="celebrant.jpg" alt="Dr. Nelia" />
+      <video src="celebrant.mp4" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
     </div>
-    <h1>?? Happy Birthday ??</h1>
+    <h1>🎉 Happy Birthday 🎉</h1>
     <div class="name">Dr. Nelia S. Raganas</div>
     <button class="btn" onclick="showMessages()">See Messages</button>
     <div class="message-box" id="messageBox">Loading messages...</div>
-    <div class="audio-tip">?? Tap anywhere to play the birthday music</div>
+    <div class="audio-tip">🔊 Tap anywhere to play the birthday music</div>
   </div>
 
   <audio id="music" loop>
@@ -157,7 +151,7 @@
               messageBox.innerText = messages[currentIndex];
             } else {
               clearInterval(interval);
-              messageBox.innerText = "?? That's all the messages. Have a wonderful birthday!";
+              messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
             }
           }, 3000);
         });
