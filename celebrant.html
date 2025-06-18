@@ -128,11 +128,12 @@
       margin: 10px;
       position: relative;
     }
-    .slider {
-      width: 300%;
-      height: 100%;
-      display: flex;
-      animation: slideImages 0.5s infinite;
+   .slider {
+  width: 300%;
+  height: 100%;
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
     }
     .slider img {
       width: 100%;
@@ -234,6 +235,16 @@
   </audio>
 
   <script>
+
+    let slideIndex = 0;
+  const sliders = document.querySelectorAll('.slider');
+
+  setInterval(() => {
+    slideIndex = (slideIndex + 1) % 3; // change 3 to your total slide count if different
+    sliders.forEach(sl => {
+      sl.style.transform = `translateX(-${slideIndex * 100}%)`;
+    });
+  }, 6000);
     const countdownEl = document.getElementById('countdown');
     const banner = document.getElementById('banner');
     const image = document.getElementById('center-image');
