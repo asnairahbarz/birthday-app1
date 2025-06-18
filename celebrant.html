@@ -30,14 +30,14 @@
     .type-line {
       opacity: 0;
       animation: typeIn 0.8s ease forwards;
-      animation-fill-mode: forwards;
-    }
-    .type-line.show {
-      opacity: 1;
     }
     @keyframes typeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     #countdown {
       font-size: 8rem;
@@ -177,14 +177,21 @@
 </head>
 <body>
   <div id="welcome-dialog">
-    <div class="type-line" id="line1">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
-    <div class="type-line" id="line2">Click anywhere on the screen to begin the celebration countdown!</div>
+    <div class="type-line" style="animation-delay:0s">🎂 Hello Dr. Nelia! A special surprise awaits you! 🎁</div>
+    <div class="type-line" style="animation-delay:1s">Click anywhere on the screen to begin the celebration countdown!</div>
   </div>
 
   <div id="countdown">10</div>
   <div id="banner">🎉 Happy Birthday Dr. Nelia 🎉</div>
   <img id="center-image" src="celebrant-pic.png" alt="Celebrant">
-  <div id="letter-panel"></div>
+  <div id="letter-panel">
+    <p>Happy Birthday, Dr. Raganas!</p>
+    <p>On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support. Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.</p>
+    <p>May this year bring you continued success, good health, and moments of joy both in your professional and personal life. You truly deserve all the best that life has to offer.</p>
+    <p>Wishing you a wonderful birthday and many more to come!</p>
+    <p>Respectfully,<br/>Asnairah</p>
+    <button id="continueBtn">Continue</button>
+  </div>
 
   <div class="container">
     <div class="slider-wrapper">
@@ -212,84 +219,61 @@
     </div>
   </div>
 
-  <audio id="letterAudio" src="letter.mp3"></audio>
-  <audio id="music" src="birthday.mp3" loop></audio>
+  <audio id="music" loop>
+    <source src="birthday.mp3" type="audio/mp3">
+  </audio>
 
   <script>
     const countdownEl = document.getElementById('countdown');
     const banner = document.getElementById('banner');
     const image = document.getElementById('center-image');
-    const letterPanel = document.getElementById('letter-panel');
-    const welcome = document.getElementById('welcome-dialog');
-    const music = document.getElementById('music');
-    const letterAudio = document.getElementById('letterAudio');
+    const letter = document.getElementById('letter-panel');
+    const continueBtn = document.getElementById('continueBtn');
 
-    const letterLines = [
-      "Happy Birthday, Dr. Raganas!",
-      "On your special day, I want to take a moment to sincerely thank you for your guidance, wisdom, and unwavering support.",
-      "Working under your leadership has been an inspiring journey, and I deeply appreciate your dedication and the example you set for all of us.",
-      "May this year bring you continued success, good health, and moments of joy both in your professional and personal life.",
-      "You truly deserve all the best that life has to offer.",
-      "Wishing you a wonderful birthday and many more to come!",
-      "Respectfully,<br/>Asnairah"
-    ];
-
-    function showLetterLine(index) {
-      if (index < letterLines.length) {
-        const line = document.createElement('p');
-        line.innerHTML = letterLines[index];
-        line.style.opacity = 0;
-        letterPanel.appendChild(line);
-        setTimeout(() => {
-          line.style.transition = 'opacity 1s';
-          line.style.opacity = 1;
-          showLetterLine(index + 1);
-        }, 1800);
-      } else {
-        const btn = document.createElement('button');
-        btn.textContent = "Continue";
-        btn.id = "continueBtn";
-        btn.onclick = () => {
-          letterAudio.pause();
-          letterPanel.style.display = 'none';
-          document.querySelector('.container').style.display = 'flex';
-          music.play();
-        };
-        letterPanel.appendChild(btn);
-      }
-    }
+    let count = 10;
+    const countdownSound = new Audio('countdown.mp3');
+    const letterMusic = new Audio('letter.mp3');
+    const birthdayMusic = new Audio('birthday.mp3');
 
     function startCountdown() {
-      welcome.style.display = 'none';
+      document.getElementById('welcome-dialog').style.display = 'none';
       countdownEl.style.display = 'block';
-      letterAudio.play();
+      countdownSound.play();
 
-      let count = 10;
-      countdownEl.textContent = count;
-      const interval = setInterval(() => {
+      let interval = setInterval(() => {
         count--;
         countdownEl.textContent = count;
         if (count <= 0) {
           clearInterval(interval);
           countdownEl.style.display = 'none';
-          banner.style.display = 'block';
-          image.style.display = 'block';
+
           setTimeout(() => {
-            banner.style.display = 'none';
-            image.style.display = 'none';
-            letterPanel.style.display = 'block';
-            showLetterLine(0);
-          }, 5000);
+            banner.style.display = 'block';
+            image.style.display = 'block';
+
+            setTimeout(() => {
+              banner.style.display = 'none';
+              image.style.display = 'none';
+              letter.style.display = 'block';
+              letterMusic.play();
+            }, 5000);
+          }, 0); // Show banner and image immediately after countdown ends
         }
       }, 1000);
     }
 
     window.addEventListener('click', startCountdown, { once: true });
 
+    continueBtn.addEventListener('click', () => {
+      letter.style.display = 'none';
+      document.querySelector('.container').style.display = 'flex';
+      birthdayMusic.play();
+    });
+
     let messages = [];
     let currentIndex = 0;
     let interval;
-    const messageBox = document.getElementById("messageBox");
+    let messageBox = document.getElementById("messageBox");
 
     function showMessages() {
       document.querySelector(".btn").style.display = "none";
