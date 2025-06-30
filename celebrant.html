@@ -163,9 +163,10 @@
 <body>
   <video id="personal-greeting-video" src="personal-greeting-bg.mp4" autoplay muted loop></video>
   <video id="video-background" src="celebrant-video-bg.mp4" autoplay muted loop></video>
-   <audio id="personalGreetingMusic" autoplay loop>
-    <source src="p<source src="letter.mp3" type="audio/mp3">
-     </audio>
+  <audio id="personalGreetingMusic" autoplay loop>
+    <source src="letter.mp3" type="audio/mp3">
+  </audio>
+
   <div id="welcome-dialog">
     <div class="type-line" style="animation-delay:0s">Click anywhere on the screen to begin the celebration countdown!</div>
   </div>
@@ -205,6 +206,7 @@
     const messageBox = document.getElementById("messageBox");
     const nextBtn = document.getElementById("nextBtn");
     const backBtn = document.getElementById("backBtn");
+    const greetingMusic = document.getElementById("personalGreetingMusic");
 
     let count = 10;
     const countdownSound = new Audio('countdown.mp3');
@@ -230,6 +232,7 @@
               banner.style.display = 'none';
               document.body.style.background = 'none';
               greetingBg.style.display = 'block';
+              greetingMusic.play();
               image.style.display = 'none';
               continueBtn.style.display = 'block';
             }, 5000);
@@ -243,6 +246,8 @@
     continueBtn.addEventListener('click', () => {
       continueBtn.style.display = 'none';
       greetingBg.style.display = 'none';
+      greetingMusic.pause();
+      greetingMusic.currentTime = 0;
       document.body.classList.add('video-bg');
       videoBg.style.display = 'block';
       document.querySelector('.container').style.display = 'flex';
@@ -258,11 +263,6 @@
         .then(res => res.json())
         .then(data => {
           messages = data;
-          if (messages.length === 0) {
-            messageBox.style.display = "block";
-            messageBox.innerText = "No messages yet.";
-            return;
-          }
           messageBox.style.display = "block";
           nextBtn.style.display = "inline-block";
           backBtn.style.display = "inline-block";
@@ -271,20 +271,20 @@
     }
 
     function updateMessage() {
-      messageBox.innerText = messages[currentIndex];
-      backBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= messages.length - 1;
-    }
-
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < messages.length - 1) {
-        currentIndex++;
-        updateMessage();
+      if (currentIndex < messages.length) {
+        messageBox.innerText = messages[currentIndex];
+        backBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = false;
       } else {
         messageBox.innerText = "🎊 That's all the messages. Have a wonderful birthday!";
         nextBtn.style.display = "none";
         backBtn.style.display = "none";
       }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex++;
+      updateMessage();
     });
 
     backBtn.addEventListener("click", () => {
