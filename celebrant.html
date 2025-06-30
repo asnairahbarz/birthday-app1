@@ -10,7 +10,8 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #000;
+      background: #f8fff8 url('floral-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       text-align: center;
       color: #106600;
       overflow-x: hidden;
@@ -107,7 +108,9 @@
       animation: fadeIn 2s ease-in-out;
     }
     #continueBtn {
-      margin-top: 20px;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
       background: #106600;
       color: #fff;
       border: none;
@@ -246,6 +249,9 @@
 
             setTimeout(() => {
               banner.style.display = 'none';
+              document.body.style.background = 'none';
+              greetingBg.style.display = 'none';
+              videoBg.style.display = 'block';
               image.style.display = 'none';
               letter.style.display = 'block';
               letterMusic.play();
